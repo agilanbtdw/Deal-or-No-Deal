@@ -1,0 +1,2049 @@
+#include<fstream.h>
+#include<conio.h>
+#include<string.h>
+#include<stdio.h>
+#include<graphics.h>
+#include<stdlib.h>
+#include<dos.h>
+#include<ctype.h>
+
+char th[50];
+int space=105;
+long int deal=0;
+char uname[50];
+
+class info
+{char deal[100];
+public:
+char name[100];
+long int no;
+void accept()
+{cout<<"\nEnter your name:";
+gets(name);
+cout<<"Enter your deal:";
+cin>>no;
+}
+void display()
+{///*
+sprintf(deal,"Rs %li",no);
+space+=50;
+rectangle(120,100,520,400);
+line(300,100,300,400);
+line(120,150,520,150);
+settextstyle(7,0,4);
+outtextxy(160,105,"Name");
+settextstyle(7,0,3);
+outtextxy(330,110,"Amount won");
+//i++;
+outtextxy(150,space,name);
+outtextxy(350,space,deal);
+//*/
+/*
+cout<<"\nYour name is:"<<name;
+cout<<"        Your deal is:"<<deal;
+//*/
+}
+}s;
+int check(char uname[]);
+void extras(int);
+void mainmenu();
+void highscores();
+void hsm();
+void dealc();
+void dealaccept();
+void wrong (int k);
+void boxopen();
+void design_circle();
+void boxamount();
+void gameend();
+
+
+long int money[14]={2500000,1000000,500000,300000,100000,50000,15000,5000,4000,3000,2000,1000,50,1};
+long int temp_moneytree[14],box[14],userboxno,tempbox[14],no[14]={1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+int dflag=1,boxtoopen,highscore=0,ext=0;
+char quit;
+
+
+void main()
+{int gdriver = DETECT, gmode;
+initgraph(&gdriver, &gmode, "C:\\TC\\BGI");
+randomize();
+for(int i=0;i<14;i++)
+   box[i]=money[random(14)];
+int flag=0;
+do{
+for(i=0;i<14;i++)
+   for(int j=0;j<14;j++)
+   if(i!=j && box[i]==box[j])
+     {box[i]=money[random(14)];
+      i=0;
+      flag++;}
+}while(flag==0);
+
+for(i=0;i<14;i++)
+{tempbox[i]=box[i];
+temp_moneytree[i]=box[i];}
+
+delay(1500);
+mainmenu();
+while(highscore || ext)
+{highscore=0;
+ext=0;
+mainmenu();}
+
+setcolor(WHITE);
+//Choosing the Box
+for(i=0;i<2;i++)
+{
+do{
+flag=0;
+cleardevice();
+//border
+rectangle(10,10,635,470);
+
+//boxes
+int x1,y1,x2,y2;
+for(x1=70,y1=25,x2=150,y2=120;x1<=470;x1+=100,x2+=100)
+rectangle(x1,y1,x2,y2);
+
+for(x1=110,y1=140,x2=190,y2=235;x1<=410;x1+=100,x2+=100)
+rectangle(x1,y1,x2,y2);
+
+for(x1=70,y1=255,x2=150,y2=350;x1<=470;x1+=100,x2+=100)
+rectangle(x1,y1,x2,y2);
+
+settextstyle(7,0,7);
+outtextxy(75,260,"11");
+settextstyle(7,0,8);
+outtextxy(190,250,"9");
+settextstyle(7,0,7);
+outtextxy(270,260,"12");
+settextstyle(7,0,8);
+outtextxy(390,250,"6");
+outtextxy(490,250,"8");
+
+outtextxy(130,135,"4");
+outtextxy(230,135,"1");
+settextstyle(7,0,7);
+outtextxy(315,145,"10");
+settextstyle(7,0,8);
+outtextxy(430,135,"2");
+
+settextstyle(7,0,7);
+outtextxy(70,30,"13");
+settextstyle(7,0,8);
+outtextxy(190,20,"5");
+settextstyle(7,0,7);
+outtextxy(270,30,"14");
+settextstyle(7,0,8);
+outtextxy(390,20,"3");
+settextstyle(7,0,8);
+outtextxy(495,20,"7");
+
+line(10,400,635,400);
+
+if(i==0)
+{settextstyle(3,0,4);
+outtextxy(20,410,"WELCOME TO");
+settextstyle(7,0,5);
+outtextxy(220,405,"DEAL OR NO DEAL");
+delay(1000);}
+if(i==1)
+{settextstyle(3,0,4);
+outtextxy(20,410,"Enter your lucky BOX NUMBER");
+line(500,400,500,470);
+window(71,28,71,28);
+cin>>userboxno;
+tempbox[userboxno-1]=0;
+no[userboxno-1]=0;
+if(userboxno>14 || userboxno<1)
+{flag++;
+cleardevice();
+settextstyle(7,0,2);
+outtextxy(50,200,"Wrong Input!!!! Choose a valid box number (1-14)");
+delay(2000);
+}
+
+}}while(flag!=0);
+}
+no[userboxno-1]=0;
+//display box
+//settextstyle(7,0,7);
+cleardevice();
+rectangle(10,10,635,470);
+line(10,400,635,400);
+rectangle(250,100,400,250);
+settextstyle(7,0,10);
+switch(userboxno)
+{case 1:outtextxy(290,95,"1");
+	break;
+ case 2:outtextxy(290,95,"2");
+	break;
+ case 3:outtextxy(290,95,"3");
+	break;
+ case 4:outtextxy(290,95,"4");
+	break;
+ case 5:outtextxy(290,95,"5");
+	break;
+ case 6:outtextxy(290,95,"6");
+	break;
+ case 7:outtextxy(290,95,"7");
+	break;
+ case 8:outtextxy(290,95,"8");
+	break;
+ case 9:outtextxy(290,95,"9");
+	break;
+ case 10:outtextxy(250,95,"10");
+	 break;
+ case 11:outtextxy(250,95,"11");
+	 break;
+ case 12:outtextxy(250,95,"12");
+	 break;
+ case 13:outtextxy(250,95,"13");
+	 break;
+ case 14:outtextxy(250,95,"14");
+	 break;     }
+settextstyle(3,0,1);
+outtextxy(30,400,"Remember this game is all about  PROBABILITY, so play carefully.");
+outtextxy(270,435,"!GOOD LUCK!");
+delay(1000);
+
+i=0;
+main:
+for(;i<18;i++)
+{
+//delay(5000);
+cleardevice();
+//1.round 1
+rectangle(10,10,635,470);
+line(10,405,635,405);
+
+//1.1 Money Tree
+line(500,10,500,470);
+line(500,40,635,40);
+settextstyle(3,0,3);
+outtextxy(503,10,"MONEY TREE");
+for(int i1=1,j=66;i1<=14;i1++,j+=26)
+line(500,j,635,j);
+
+
+//Boxes
+//Box11
+if(no[10])
+{settextstyle(7,0,7);
+rectangle(30,280,110,360);
+outtextxy(37,280,"11");}
+
+//Box9
+if(no[8])
+{settextstyle(7,0,8);
+rectangle(120,280,200,360);
+outtextxy(140,270,"9");}
+
+//Box12
+if(no[11])
+{settextstyle(7,0,7);
+rectangle(210,280,290,360);
+outtextxy(210,280,"12");}
+
+//Box6
+if(no[5])
+{settextstyle(7,0,8);
+rectangle(300,280,380,360);
+outtextxy(320,270,"6");}
+
+//Box8
+if(no[7])
+{settextstyle(7,0,8);
+rectangle(390,280,470,360);
+outtextxy(410,270,"8");}
+
+//Box4
+if(no[3])
+{settextstyle(7,0,8);
+rectangle(60,165,140,245);
+outtextxy(80,155,"4");}
+
+//Box1
+if(no[0])
+{settextstyle(7,0,8);
+rectangle(160,165,240,245);
+outtextxy(180,155,"1");}
+
+//Box10
+if(no[9])
+{settextstyle(7,0,7);
+rectangle(260,165,340,245);
+outtextxy(265,165,"10");}
+
+//Box2
+if(no[1])
+{settextstyle(7,0,8);
+rectangle(360,165,440,245);
+outtextxy(380,155,"2"); }
+
+//Box13
+if(no[12])
+{settextstyle(7,0,7);
+rectangle(30,50,110,130);
+outtextxy(33,48,"13");}
+
+//Box5
+if(no[4])
+{settextstyle(7,0,8);
+rectangle(120,50,200,130);
+outtextxy(140,40,"5");}
+
+//Box14
+if(no[13])
+{settextstyle(7,0,7);
+rectangle(210,50,290,130);
+outtextxy(215,47,"14");}
+
+//Box3
+if(no[2])
+{settextstyle(7,0,8);
+rectangle(300,50,380,130);
+outtextxy(320,40,"3");}
+
+//Box7
+if(no[6])
+{settextstyle(7,0,8);
+rectangle(390,50,470,130);
+outtextxy(415,40,"7");}
+
+settextstyle(7,0,2);
+setcolor(RED);
+outtextxy(503,40,"Rs     1");
+outtextxy(503,65,"Rs    50");
+outtextxy(503,90,"Rs   1000");
+outtextxy(503,117,"Rs   2000");
+outtextxy(503,143,"Rs   3000");
+outtextxy(503,169,"Rs   4000");
+outtextxy(503,195,"Rs   5000");
+outtextxy(503,220,"Rs  15,000");
+outtextxy(503,248,"Rs  50,000");
+outtextxy(503,273,"Rs 1,00,000");
+outtextxy(503,299,"Rs 3,00,000");
+outtextxy(503,325,"Rs 5,00,000");
+outtextxy(503,351,"Rs");
+settextstyle(7,0,1);
+outtextxy(533,351,"10,00,000");
+settextstyle(7,0,2);
+outtextxy(503,377,"Rs");
+settextstyle(7,0,1);
+outtextxy(533,377,"25,00,000");
+
+
+setcolor(YELLOW);
+for(int k=0;k<14;k++)
+{settextstyle(7,0,2);
+switch(temp_moneytree[k])
+ {case 1:outtextxy(503,40,"Rs     1");
+	 break;
+  case 50:outtextxy(503,65,"Rs    50");
+	  break;
+  case 1000:outtextxy(503,90,"Rs   1000");
+	    break;
+  case 2000:outtextxy(503,117,"Rs   2000");
+	    break;
+  case 3000:outtextxy(503,143,"Rs   3000");
+	    break;
+  case 4000:outtextxy(503,169,"Rs   4000");
+	    break;
+  case 5000:outtextxy(503,195,"Rs   5000");
+	    break;
+  case 15000:outtextxy(503,220,"Rs  15,000");
+	     break;
+  case 50000:outtextxy(503,248,"Rs  50,000");
+	     break;
+  case 100000:outtextxy(503,273,"Rs 1,00,000");
+	      break;
+  case 300000:outtextxy(503,299,"Rs 3,00,000");
+	      break;
+  case 500000:outtextxy(503,325,"Rs 5,00,000");
+	      break;
+  case 1000000:outtextxy(503,351,"Rs");
+	       settextstyle(7,0,1);
+	       outtextxy(533,351,"10,00,000");
+	       break;
+  case 2500000:outtextxy(503,377,"Rs");
+	       settextstyle(7,0,1);
+	       outtextxy(533,377,"25,00,000");
+	       break;}
+}
+
+setcolor(WHITE);
+
+if(i==0)
+{a:outtextxy(20,410,"Enter the 1st box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1 )
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+ goto main;}
+ boxopen();
+ setcolor(WHITE);
+ tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==1)
+{b:outtextxy(20,410,"Enter the 2nd box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1)
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+ goto main;}
+ boxopen();
+ setcolor(WHITE);
+ tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==2)
+{c:outtextxy(20,410,"Enter the 3rd box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1)
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+ goto main;}
+ boxopen();
+ setcolor(WHITE);
+ tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==3)
+{d:outtextxy(20,410,"Enter the 4th box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1)
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+ goto main;}
+ boxopen();
+ setcolor(WHITE);
+ tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==4)
+{e:outtextxy(20,410,"Enter the 5th box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1)
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+ goto main;}
+ boxopen();
+ setcolor(WHITE);
+ tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==5)
+dealc();
+
+if(i==6)
+{f:outtextxy(20,410,"Enter the 6th box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1)
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+ goto main;}
+ boxopen();
+ setcolor(WHITE);
+ tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==7)
+{g:outtextxy(20,410,"Enter the 7th box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1)
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+ goto main;}
+ boxopen();
+ setcolor(WHITE);
+ tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==8)
+{h:outtextxy(20,410,"Enter the 8th box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1)
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+ goto main;}
+ boxopen();
+ setcolor(WHITE);
+ tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==9)
+{i:outtextxy(20,410,"Enter the 9th box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1)
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+  goto main;}
+  boxopen();
+  setcolor(WHITE);
+ tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==10)
+dealc();
+
+if(i==11)
+{j:outtextxy(20,410,"Enter the 10th box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1)
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+  goto main;}
+  boxopen();
+  setcolor(WHITE);
+ tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==12)
+{k:outtextxy(20,410,"Enter the 11th box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1)
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+ goto main;}
+ boxopen();
+ setcolor(WHITE);
+ tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==13)
+dealc();
+
+if(i==14)
+{l:outtextxy(20,410,"Enter the 12th box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1)
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+  goto main;}
+  boxopen();
+  setcolor(WHITE);
+  tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==15)
+dealc();
+
+if(i==16)
+{m:outtextxy(20,410,"Enter the 13th box to be opened");
+ window(71,28,71,28);
+ cin>>boxtoopen;
+ while(tempbox[boxtoopen-1]==0 || boxtoopen>14 || boxtoopen<1)
+ {if(tempbox[boxtoopen-1]==0)
+    wrong(-1);
+  else if(boxtoopen>14 || boxtoopen<1)
+    wrong(-2);
+  goto main; }
+  boxopen();
+  setcolor(WHITE);
+ tempbox[boxtoopen-1]=0;
+ temp_moneytree[boxtoopen-1]=0;
+ no[boxtoopen-1]=0;
+}
+
+if(i==17)
+gameend();
+
+}
+
+}
+
+void design_circle()
+{int k=0;
+int x,y,i;
+cleardevice();
+x=getmaxx()/2;
+y=getmaxy()/2;
+settextstyle(TRIPLEX_FONT, HORIZ_DIR, 3);
+setbkcolor(rand());
+setcolor(4);
+       while (k<=5)
+       {k++;
+       setcolor(rand());
+       for (int i=0;i<50;i++)
+       circle(x,y,i );
+       setcolor(rand());
+       for (int j=70;j<120;j++)
+       circle(x,y,j);
+       setcolor(rand());
+       for (int k=140;k<190;k++)
+       circle(x,y,k);
+       setcolor(rand());
+       for (int l=210;l<230;l++)
+       circle(x,y,l);
+       delay(200);}
+cleardevice();
+}
+
+void boxopen()
+{cleardevice();
+rectangle(10,10,635,470);
+line(10,400,635,400);
+rectangle(250,100,400,250);
+settextstyle(7,0,10);
+switch(boxtoopen)
+{case 1:outtextxy(290,95,"1");
+	break;
+ case 2:outtextxy(290,95,"2");
+	break;
+ case 3:outtextxy(290,95,"3");
+	break;
+ case 4:outtextxy(290,95,"4");
+	break;
+ case 5:outtextxy(290,95,"5");
+	break;
+ case 6:outtextxy(290,95,"6");
+	break;
+ case 7:outtextxy(290,95,"7");
+	break;
+ case 8:outtextxy(290,95,"8");
+	break;
+ case 9:outtextxy(290,95,"9");
+	break;
+ case 10:outtextxy(250,95,"10");
+	 break;
+ case 11:outtextxy(250,95,"11");
+	 break;
+ case 12:outtextxy(250,95,"12");
+	 break;
+ case 13:outtextxy(250,95,"13");
+	 break;
+ case 14:outtextxy(250,95,"14");
+	 break;     }
+settextstyle(3,0,1);
+outtextxy(190,400,"Is it your lucky box ? LET'S SEE!");
+outtextxy(280,435,"!GOOD LUCK!");
+delay(1000);
+design_circle();
+boxamount();}
+
+void boxamount()
+{cleardevice();
+settextstyle(7,0,6);
+setcolor(WHITE);
+rectangle(10,10,635,470);
+line(10,400,635,400);
+switch(box[boxtoopen-1])
+{case 2500000:outtextxy(140,160,"Rs 25,00,000");
+	      settextstyle(6,0,3);
+	      outtextxy(15,410,"TOUGH LUCK! You have lost the maximum amount in this game");
+	      break;
+case 1000000:outtextxy(140,160,"Rs 10,00,000");
+	    settextstyle(6,0,3);
+	    outtextxy(40,410,"Now you you have less chances of winning a high amount");
+	    break;
+case 500000:outtextxy(140,160,"Rs 5,00,000");
+	    settextstyle(6,0,3);
+	    outtextxy(40,410,"Now you you have less chances of winning a high amount");
+	    break;
+case 300000:outtextxy(140,160,"Rs 3,00,000");
+	    settextstyle(6,0,3);
+	    outtextxy(40,410,"Now you you have less chances of winning a high amount");
+	    break;
+case 100000:outtextxy(140,160,"Rs 1,00,000");
+	    settextstyle(6,0,3);
+	    outtextxy(40,410,"Now you you have less chances of winning a high amount");
+	    break;
+case 50000:outtextxy(190,160,"Rs 50,000");
+	   settextstyle(6,0,3);
+	   outtextxy(25,410,"DONT WORRY! It's not a big amount when compared to others");
+	   break;
+case 15000:outtextxy(190,160,"Rs 15,000");
+	   settextstyle(6,0,3);
+	   outtextxy(25,410,"DONT WORRY! It's not a big amount when compared to others");
+	   break;
+case 5000:outtextxy(220,160,"Rs 5000");
+	  settextstyle(6,0,3);
+	  outtextxy(40,410,"Boxes like this ensure that you take a good amount home!");
+	  break;
+case 4000:outtextxy(220,160,"Rs 4000");
+	  settextstyle(6,0,3);
+	  outtextxy(40,410,"Boxes like this ensure that you take a good amount home!");
+	  break;
+case 3000:outtextxy(220,160,"Rs 3000");
+	  settextstyle(6,0,3);
+	  outtextxy(40,410,"Boxes like this ensure that you take a good amount home!");
+	  break;
+case 2000:outtextxy(220,160,"Rs 2000");
+	  settextstyle(6,0,3);
+	  outtextxy(40,410,"Boxes like this ensure that you take a good amount home!");
+	  break;
+case 1000:outtextxy(220,160,"Rs 1000");
+	  settextstyle(6,0,3);
+	  outtextxy(40,410,"Boxes like this ensure that you take a good amount home!");
+	  break;
+case 50:outtextxy(250,160,"Rs 50");
+	settextstyle(6,0,4);
+	outtextxy(30,410,"COME ON! Good playing,open boxes like this");
+	break;
+case 1:outtextxy(250,160,"Rs 1");
+       settextstyle(6,0,3);
+       outtextxy(50,410,"Congrats! You wont get 1 rupee in this game anymore"); }
+delay(1000);
+}
+
+void wrong (int k)
+{cleardevice();
+if(k==-1)
+{settextstyle(2,0,5);
+outtextxy(80,200,"!INVALID INPUT!-You cannot open a box that you have aldready opened");
+}
+else if(k==-2)
+{settextstyle(7,0,2);
+outtextxy(50,200,"!INVALID INPUT!-Enter box numbers between 1-14");
+delay(2000);
+exit(0);}
+delay(2000);}
+
+void dealc()
+{int temp=0;
+long int low,high;
+do{
+low=temp_moneytree[temp];
+high=temp_moneytree[0];
+temp++;}while(low==0);
+cleardevice();
+int i;
+settextstyle(7,0,7);
+
+for(i=0;i<14;i++)
+    {if(temp_moneytree[i]!=0)
+       {if(low>temp_moneytree[i])
+	  low=temp_moneytree[i];
+	if(high<temp_moneytree[i])
+	  high=temp_moneytree[i];}}
+
+//deal after round 1
+if(dflag==1)
+{if(high==2500000)
+  {switch(random(5))
+  {case 0:outtextxy(100,100,"Rs 66666");
+	  deal=66666;
+	  break;
+   case 1:outtextxy(100,100,"Rs 67891");
+	  deal=67891;
+	  break;
+   case 2:outtextxy(100,100,"Rs 72001");
+	  deal=72001;
+	  break;
+   case 3:outtextxy(100,100,"Rs 72010");
+	  deal=72010;
+	  break;
+   case 4:outtextxy(100,100,"Rs 85000");
+	  deal=85000; }
+   }
+else if(high==2500000  || high==1000000 && low==50)
+{switch(random(5))
+  {case 0:outtextxy(100,100,"Rs 35000");
+	  deal=35000;
+	  break;
+   case 1:outtextxy(100,100,"Rs 32101");
+	  deal=32101;
+	  break;
+   case 2:outtextxy(100,100,"Rs 30000");
+	  deal=30000;
+	  break;
+   case 3:outtextxy(100,100,"Rs 33333");
+	  deal=33333;
+	  break;
+   case 4:outtextxy(100,100,"Rs 43210");
+	  deal=43210;}
+}
+else if(low>50000 || high==2500000)
+       {switch(random(5))
+	{case 0:outtextxy(100,100,"Rs 29000");
+		deal=29000;
+		break;
+	 case 1:outtextxy(100,100,"Rs 25252");
+		deal=25252;
+		break;
+	 case 2:outtextxy(100,100,"Rs 22222");
+		deal=22222;
+		break;
+	 case 3:outtextxy(100,100,"Rs 24567");
+		deal=24567;
+		break;
+	 case 4:outtextxy(100,100,"Rs 20001");
+		deal=20001;}}
+     else if(high<300000 && low>15000)
+	    {outtextxy(100,100,"Rs 19191");
+	     deal=19191;}
+	  else if(high>=15000 && high<=500000 && low<=5000 && low>=1000)
+	    {outtextxy(100,100,"Rs 15002");
+	     deal=15002;}
+	       else
+		{outtextxy(100,100,"Rs 18000");
+		 deal=18000;}
+}
+
+//deal after round 2
+if(dflag==2)
+{if(high==2500000)
+  {switch(random(5))
+  {case 0:outtextxy(100,100,"Rs 93000");
+	  deal=93000;
+	  break;
+   case 1:outtextxy(100,100,"Rs 100001");
+	  deal=100001;
+	  break;
+   case 2:outtextxy(100,100,"Rs 99999");
+	  deal=99999;
+	  break;
+   case 3:outtextxy(100,100,"Rs 150000");
+	  deal=150000;
+	  break;
+   case 4:outtextxy(100,100,"Rs 1010101");
+	  deal=1010101;}
+   }
+else if(high==2500000  || high==1000000 && low>=15000)
+{outtextxy(100,100,"Rs 88888");
+ deal=88888;}
+else if(high==500000 && low==1 || low==50)
+       {outtextxy(100,100,"Rs 50505");
+	deal=50505;}
+     else if(high==300000 && low==1 ||low==50)
+	    {outtextxy(100,100,"Rs 40104");
+	     deal=40104;}
+	  else if(high>=15000 && high<=100000 && low<=5000 && low>=1)
+	    {outtextxy(100,100,"Rs 32000");
+	     deal=32000;}
+	       else if(high>=100000 && high<=2500000 && low>=1 && low<=15000)
+		{outtextxy(100,100,"Rs 40001");
+		 deal=40001;}
+		    else
+		      {outtextxy(100,100,"Rs 25000");
+		       deal=25000;}
+}
+
+//deal after round 3
+if(dflag==3)
+{
+
+if(low==1)
+{
+if(high==50)
+{outtextxy(100,100,"Rs 30");
+deal=30;}
+if(high==1000)
+{outtextxy(100,100,"Rs 501");
+deal=501;}
+if(high==2000)
+{outtextxy(100,100,"Rs 1010");
+deal=1010;}
+if(high==3000)
+{outtextxy(100,100,"Rs 1500");
+deal=1500;}
+if(high==4000)
+{outtextxy(100,100,"Rs 2050");
+deal=2050;}
+if(high==5000)
+{outtextxy(100,100,"Rs 2300");
+deal=2300;}
+if(high==15000)
+{outtextxy(100,100,"Rs 5600");
+deal=5600;}
+if(high==50000)
+{outtextxy(100,100,"Rs 15999");
+deal=15999;}
+if(high==100000)
+{outtextxy(100,100,"Rs 45959");
+deal=45959;}
+if(high==300000)
+{outtextxy(100,100,"Rs 100555");
+deal=100555;}
+if(high==500000)
+{outtextxy(100,100,"Rs 212121");
+deal=212121;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 500099");
+deal=500099;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 1001010");
+deal=1001010;}
+}
+
+if(low==50)
+{
+if(high==1000)
+{outtextxy(100,100,"Rs 299");
+deal=299;}
+if(high==2000)
+{outtextxy(100,100,"Rs 650");
+deal=650;}
+if(high==3000)
+{outtextxy(100,100,"Rs 1500");
+deal=1500;}
+if(high==4000)
+{outtextxy(100,100,"Rs 2500");
+deal=2500;}
+if(high==5000)
+{outtextxy(100,100,"Rs 2500");
+deal=2500;}
+if(high==15000)
+{outtextxy(100,100,"Rs 5111");
+deal=5111;}
+if(high==50000)
+{outtextxy(100,100,"Rs 16099");
+deal=16099;}
+if(high==100000)
+{outtextxy(100,100,"Rs 50099");
+deal=50099;}
+if(high==300000)
+{outtextxy(100,100,"Rs 131010");
+deal=131010;}
+if(high==500000)
+{outtextxy(100,100,"Rs 201099");
+deal=201099;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 300235");
+deal=300235;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 1113232");
+deal=1113232;}
+}
+
+if(low==1000 || low==2000 || low==3000 || low==4000 ||low==5000)
+{
+if(high==2000)
+{outtextxy(100,100,"Rs 1599");
+deal=1599;}
+if(high==3000)
+{outtextxy(100,100,"Rs 2151");
+deal=2151;}
+if(high==4000)
+{outtextxy(100,100,"Rs 3222");
+deal=3222;}
+if(high==5000)
+{outtextxy(100,100,"Rs 4199");
+deal=4199;}
+if(high==15000)
+{outtextxy(100,100,"Rs 8959");
+deal=8959;}
+if(high==50000)
+{outtextxy(100,100,"Rs 24202");
+deal=24202;}
+if(high==100000)
+{outtextxy(100,100,"Rs 40001");
+deal=40001;}
+if(high==300000)
+{outtextxy(100,100,"Rs 155510");
+deal=155510;}
+if(high==500000)
+{outtextxy(100,100,"Rs 301010");
+deal=301010;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 505050");
+deal=505050;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 999111");
+deal=999111;}
+}
+
+if(low==15000)
+{
+if(high==50000)
+{outtextxy(100,100,"Rs 19111");
+deal=19111;}
+if(high==100000)
+{outtextxy(100,100,"Rs 61111");
+deal=61111;}
+if(high==300000)
+{outtextxy(100,100,"Rs 139922");
+deal=139922;}
+if(high==500000)
+{outtextxy(100,100,"Rs 300101");
+deal=300101;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 599132");
+deal=599132;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 1100455");
+deal=1100455;}
+}
+
+if(low==50000)
+{
+if(high==100000)
+{outtextxy(100,100,"Rs 70900");
+deal=70900;}
+if(high==300000)
+{outtextxy(100,100,"Rs 170100");
+deal=170100;}
+if(high==500000)
+{outtextxy(100,100,"Rs 188288");
+deal=188288;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 585959");
+deal=585959;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 1255510");
+deal=1255510;}
+}
+
+if(low==100000)
+{
+if(high==300000)
+{outtextxy(100,100,"Rs 191909");
+deal=191909;}
+if(high==500000)
+{outtextxy(100,100,"Rs 291919");
+deal=291919;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 593939");
+deal=593939;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 130200");
+deal=130200;}
+}
+
+if(low==300000)
+{
+if(high==500000)
+{outtextxy(100,100,"Rs 350220");
+deal=350220;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 1350230");
+deal=1350230;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 1500909");
+deal=1500909;}
+}
+
+if(low==500000)
+{
+if(high==1000000)
+{outtextxy(100,100,"Rs 700007");
+deal=700007;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 1609016");
+deal=1609016;}
+}
+
+if(low==1000000 && high==2500000)
+{outtextxy(100,100,"Rs 1650561");
+deal=1650561;}
+
+}
+
+//deal after round 4
+if(dflag==4)
+{
+if(low==1)
+{
+if(high==50)
+{outtextxy(100,100,"Rs 28");
+deal=28;}
+if(high==1000)
+{outtextxy(100,100,"Rs 499");
+deal=499;}
+if(high==2000)
+{outtextxy(100,100,"Rs 999");
+deal=999;}
+if(high==3000)
+{outtextxy(100,100,"Rs 1500");
+deal=1500;}
+if(high==4000)
+{outtextxy(100,100,"Rs 2010");
+deal=2010;}
+if(high==5000)
+{outtextxy(100,100,"Rs 2222");
+deal=2222;}
+if(high==15000)
+{outtextxy(100,100,"Rs 5010");
+deal=5010;}
+if(high==50000)
+{outtextxy(100,100,"Rs 15010");
+deal=15010;}
+if(high==100000)
+{outtextxy(100,100,"Rs 45454");
+deal=45454;}
+if(high==300000)
+{outtextxy(100,100,"Rs 100010");
+deal=100010;}
+if(high==500000)
+{outtextxy(100,100,"Rs 200010");
+deal=200010;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 500010");
+deal=500010;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 999999");
+deal=999999;}
+}
+
+if(low==50)
+{
+if(high==1000)
+{outtextxy(100,100,"Rs 200");
+deal=200;}
+if(high==2000)
+{outtextxy(100,100,"Rs 599");
+deal=599;}
+if(high==3000)
+{outtextxy(100,100,"Rs 1010");
+deal=1010;}
+if(high==4000)
+{outtextxy(100,100,"Rs 2010");
+deal=2010;}
+if(high==5000)
+{outtextxy(100,100,"Rs 2500");
+deal=2500;}
+if(high==15000)
+{outtextxy(100,100,"Rs 5010");
+deal=5010;}
+if(high==50000)
+{outtextxy(100,100,"Rs 16000");
+deal=16000;}
+if(high==100000)
+{outtextxy(100,100,"Rs 50010");
+deal=50010;}
+if(high==300000)
+{outtextxy(100,100,"Rs 130000");
+deal=130000;}
+if(high==500000)
+{outtextxy(100,100,"Rs 200099");
+deal=200099;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 300010");
+deal=300010;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 1112121");
+deal=1112121;}
+}
+
+if(low==1000 || low==2000 || low==3000 || low==4000 ||low==5000)
+{
+if(high==2000)
+{outtextxy(100,100,"Rs 1500");
+deal=1500;}
+if(high==3000)
+{outtextxy(100,100,"Rs 2050");
+deal=2050;}
+if(high==4000)
+{outtextxy(100,100,"Rs 3111");
+deal=3111;}
+if(high==5000)
+{outtextxy(100,100,"Rs 4099");
+deal=4099;}
+if(high==15000)
+{outtextxy(100,100,"Rs 8558");
+deal=8558;}
+if(high==50000)
+{outtextxy(100,100,"Rs 23232");
+deal=23232;}
+if(high==100000)
+{outtextxy(100,100,"Rs 49999");
+deal=49999;}
+if(high==300000)
+{outtextxy(100,100,"Rs 155555");
+deal=155555;}
+if(high==500000)
+{outtextxy(100,100,"Rs 299999");
+deal=299999;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 555555");
+deal=555555;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 999999");
+deal=999999;}
+}
+
+if(low==15000)
+{
+if(high==50000)
+{outtextxy(100,100,"Rs 19999");
+deal=19999;}
+if(high==100000)
+{outtextxy(100,100,"Rs 61010");
+deal=61010;}
+if(high==300000)
+{outtextxy(100,100,"Rs 139999");
+deal=139999;}
+if(high==500000)
+{outtextxy(100,100,"Rs 300010");
+deal=300010;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 599999");
+deal=599999;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 1100000");
+deal=1100000;}
+}
+
+if(low==50000)
+{
+if(high==100000)
+{outtextxy(100,100,"Rs 70000");
+deal=70000;}
+if(high==300000)
+{outtextxy(100,100,"Rs 170000");
+deal=170000;}
+if(high==500000)
+{outtextxy(100,100,"Rs 188888");
+deal=188888;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 585858");
+deal=585858;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 1255555");
+deal=1255555;}
+}
+
+if(low==100000)
+{
+if(high==300000)
+{outtextxy(100,100,"Rs 199999");
+deal=199999;}
+if(high==500000)
+{outtextxy(100,100,"Rs 299999");
+deal=299999;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 599999");
+deal=599999;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 1300000");
+deal=1300000;}
+}
+
+if(low==300000)
+{
+if(high==500000)
+{outtextxy(100,100,"Rs 350000");
+deal=350000;}
+if(high==1000000)
+{outtextxy(100,100,"Rs 595959");
+deal=595959;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 1500000");
+deal=1500000;}
+}
+
+if(low==500000)
+{
+if(high==1000000)
+{outtextxy(100,100,"Rs 700001");
+deal=700001;}
+if(high==2500000)
+{outtextxy(100,100,"Rs 1600000");
+deal=1600000;}
+}
+
+if(low==1000000 && high==2500000)
+{outtextxy(100,100,"Rs 1650000");
+deal=1650000;}
+
+}
+
+
+settextstyle(10,0,3);
+rectangle(60,250,210,350);
+outtextxy(90,270,"DEAL");
+
+settextstyle(10,0,2);
+rectangle(310,250,460,350);
+outtextxy(315,270,"NO DEAL");
+
+for(;;)
+{
+setcolor(WHITE);
+rectangle(10,10,635,470);
+line(10,405,635,405);
+
+settextstyle(7,0,2);
+setcolor(RED);
+outtextxy(503,40,"Rs     1");
+outtextxy(503,65,"Rs    50");
+outtextxy(503,90,"Rs   1000");
+outtextxy(503,117,"Rs   2000");
+outtextxy(503,143,"Rs   3000");
+outtextxy(503,169,"Rs   4000");
+outtextxy(503,195,"Rs   5000");
+outtextxy(503,220,"Rs  15,000");
+outtextxy(503,248,"Rs  50,000");
+outtextxy(503,273,"Rs 1,00,000");
+outtextxy(503,299,"Rs 3,00,000");
+outtextxy(503,325,"Rs 5,00,000");
+outtextxy(503,351,"Rs");
+settextstyle(7,0,1);
+outtextxy(533,351,"10,00,000");
+settextstyle(7,0,2);
+outtextxy(503,377,"Rs");
+settextstyle(7,0,1);
+outtextxy(533,377,"25,00,000");
+
+
+setcolor(YELLOW);
+//settextstyle(7,0,2);
+for(int k=0;k<14;k++)
+{settextstyle(7,0,2);
+switch(temp_moneytree[k])
+ {case 1:outtextxy(503,40,"Rs     1");
+	 break;
+  case 50:outtextxy(503,65,"Rs    50");
+	  break;
+  case 1000:outtextxy(503,90,"Rs   1000");
+	    break;
+  case 2000:outtextxy(503,117,"Rs   2000");
+	    break;
+  case 3000:outtextxy(503,143,"Rs   3000");
+	    break;
+  case 4000:outtextxy(503,169,"Rs   4000");
+	    break;
+  case 5000:outtextxy(503,195,"Rs   5000");
+	    break;
+  case 15000:outtextxy(503,220,"Rs  15,000");
+	     break;
+  case 50000:outtextxy(503,248,"Rs  50,000");
+	     break;
+  case 100000:outtextxy(503,273,"Rs 1,00,000");
+	      break;
+  case 300000:outtextxy(503,299,"Rs 3,00,000");
+	      break;
+  case 500000:outtextxy(503,325,"Rs 5,00,000");
+	      break;
+  case 1000000:outtextxy(503,351,"Rs");
+	       settextstyle(7,0,1);
+	       outtextxy(533,351,"10,00,000");
+	       break;
+  case 2500000:outtextxy(503,377,"Rs");
+	       settextstyle(7,0,1);
+	       outtextxy(533,377,"25,00,000");
+	       break;
+
+
+}
+}
+
+//1.1 Money Tree
+line(500,10,500,470);
+line(500,40,635,40);
+settextstyle(3,0,3);
+outtextxy(503,10,"MONEY TREE");
+for(int i1=1,j=66;i1<=14;i1++,j+=26)
+line(500,j,635,j);
+
+setcolor(WHITE);
+settextstyle(1,0,1);
+outtextxy(250,290,"OR");
+
+char ch=getch(),opt;
+if(ch==75)
+{setcolor(GREEN);
+settextstyle(10,0,3);
+rectangle(60,250,210,350);
+outtextxy(90,270,"DEAL");
+setcolor(WHITE);
+settextstyle(10,0,2);
+rectangle(310,250,460,350);
+outtextxy(315,270,"NO DEAL");
+opt=getch();
+if(opt==13)
+{dflag++;
+dealaccept();
+}}
+
+if(ch==77)
+{setcolor(RED);
+settextstyle(10,0,2);
+rectangle(310,250,460,350);
+outtextxy(315,270,"NO DEAL");
+setcolor(WHITE);
+settextstyle(10,0,3);
+rectangle(60,250,210,350);
+outtextxy(90,270,"DEAL");
+opt=getch();
+if(opt==13)
+{dflag++;
+break;}}
+}
+
+}
+
+
+void dealaccept()
+{settextstyle(7,0,2);
+if(box[userboxno-1]>deal)
+   {cleardevice();
+    rectangle(10,10,635,470);
+    line(10,405,635,405);
+    outtextxy(100,300,"You should have played carefully");
+    settextstyle(7,0,4);
+switch(box[userboxno-1])
+ {case 1:outtextxy(100,100,"Your box had Rs 1");
+	 break;
+  case 50:outtextxy(100,100,"Your box had Rs 50");
+	  break;
+  case 1000:outtextxy(100,100,"Your box had Rs 1000");
+	    break;
+  case 2000:outtextxy(100,110,"Your box had Rs 2000");
+	    break;
+  case 3000:outtextxy(100,100,"Your box had Rs 3000");
+	    break;
+  case 4000:outtextxy(100,100,"Your box had Rs 4000");
+	    break;
+  case 5000:outtextxy(100,100,"Your box had Rs 5000");
+	    break;
+  case 15000:outtextxy(100,100,"Your box had Rs 15,000");
+	     break;
+  case 50000:outtextxy(100,100,"Your box had Rs 50,000");
+	     break;
+  case 100000:outtextxy(100,100,"Your box had Rs 1,00,000");
+	      break;
+  case 300000:outtextxy(100,100,"Your box had Rs 3,00,000");
+	      break;
+  case 500000:outtextxy(100,100,"Your box had Rs 5,00,000");
+	      break;
+  case 1000000:outtextxy(100,100,"Your box had Rs 10,00,000");
+	       break;
+  case 2500000:outtextxy(100,100,"Your box had Rs 25,00,000");
+	       break;
+
+    }
+outtextxy(100,200,"You take home Rs ");
+sprintf(th,"%li",deal);
+outtextxy(420,200,th);
+delay(1000);}
+ else
+   {cleardevice();
+    rectangle(10,10,635,470);
+    line(10,405,635,405);
+    outtextxy(100,300,"That was a good deal!!");
+
+
+
+settextstyle(7,0,4);
+switch(box[userboxno-1])
+ {case 1:outtextxy(100,100,"Your box had Rs 1");
+	 break;
+  case 50:outtextxy(100,100,"Your box had Rs 50");
+	  break;
+  case 1000:outtextxy(100,100,"Your box had Rs 1000");
+	    break;
+  case 2000:outtextxy(100,100,"Your box had Rs 2000");
+	    break;
+  case 3000:outtextxy(100,100,"Your box had Rs 3000");
+	    break;
+  case 4000:outtextxy(100,100,"Your box had Rs 4000");
+	    break;
+  case 5000:outtextxy(100,100,"Your box had Rs 5000");
+	    break;
+  case 15000:outtextxy(100,100,"Your box had Rs 15,000");
+	     break;
+  case 50000:outtextxy(100,100,"Your box had Rs 50,000");
+	     break;
+  case 100000:outtextxy(100,100,"Your box had Rs 1,00,000");
+	      break;
+  case 300000:outtextxy(100,100,"Your box had Rs 3,00,000");
+	      break;
+  case 500000:outtextxy(100,100,"Your box had Rs 5,00,000");
+	      break;
+  case 1000000:outtextxy(100,100,"Your box had Rs 10,00,000");
+	       break;
+  case 2500000:outtextxy(100,100,"Your box had Rs 25,00,000");
+	       break;
+
+    }
+outtextxy(100,200,"You take home Rs ");
+sprintf(th,"%li",deal);
+outtextxy(420,200,th);
+delay(1000);}
+
+getch();
+cleardevice();
+hsm();
+exit(0);
+}
+
+void gameend()
+{cleardevice();
+setcolor(YELLOW);
+settextstyle(7,0,2);
+if(box[userboxno-1]<100000)
+   outtextxy(100,300,"You should have played little carefully");
+ else if(box[userboxno-1]>=100000 && box[userboxno-1]<1000000)
+	outtextxy(100,300,"That's a pretty good amount");
+      else
+	outtextxy(100,300,"That's a very good amount,congrats!!");
+char bxno[50];
+settextstyle(7,0,4);
+sprintf(bxno,"You chose box number %i",userboxno);
+outtextxy(100,100,bxno);
+sprintf(th,"%li",box[userboxno-1]);
+deal=box[userboxno-1];
+outtextxy(100,200,"Your box has Rs");
+outtextxy(380,200,th);
+delay(1000);
+getch();
+cleardevice();
+hsm();
+exit(0);}
+
+void mainmenu()
+{s:
+cleardevice();
+char a[100][100];
+int c,i1=0,i2=0,i3=0,i4=0,i=0,flag=0;
+int x1,x2,y1,y2;
+strcpy(a[0],"$ DEAL OR NODEAL $");
+strcpy(a[1],"PLAY");
+strcpy(a[2],"TOP 5");
+strcpy(a[3],"EXTRAS");
+strcpy(a[4],"EXIT");
+
+x1=45;
+x2=205;
+y1=125;
+y2=185;
+
+
+setcolor(WHITE);
+for(int s1=500,s2=500,s3=500,s4=500;flag<=1;)
+{
+delay(30);
+cleardevice();
+settextstyle(1,0,4);
+c=random(14)+1;
+setcolor(c);
+
+if(i<=180)
+{outtextxy(i,50,a[0]);
+i+=6;}
+else
+{i=180;
+outtextxy(i,50,a[0]);
+}
+
+setcolor(WHITE);
+
+if(i4<370)
+{rectangle(50,i4,200,i4+50);
+i4+=16;}
+else
+{i4=370;
+rectangle(50,i1,200,i1+50);
+rectangle(50,i2,200,i2+50);
+rectangle(50,i3,200,i3+50);
+rectangle(50,i4,200,i4+50);}
+if(s4>93)
+{outtextxy(s4,375,a[4]);
+s4-=16;}
+else
+{s4=88;
+outtextxy(s4,375,a[4]);
+}
+
+
+if(i3<290)
+{rectangle(50,i3,200,i3+50);
+i3+=12;}
+else
+i3=290;
+if(s3>70)
+{outtextxy(s3,294,a[3]);
+s3-=15;}
+else
+{s3=70;
+outtextxy(s3,294,a[3]);
+}
+
+
+if(i2<210)
+{rectangle(50,i2,200,i2+50);
+i2+=8;}
+else
+i2=210;
+if(s2>70)
+{outtextxy(s2,213,a[2]);
+s2-=14;}
+else
+{s2=80;
+outtextxy(s2,213,a[2]);
+}
+
+
+if(i1<130)
+{rectangle(50,i1,200,i1+50);
+i1+=4;}
+else
+i1=130;
+if(s1>93)
+{outtextxy(s1,132,a[1]);
+s1-=13;}
+else
+{s1=88;
+outtextxy(s1,132,a[1]);}
+
+if(i1==130 && s1==88 && i2==210 && i3==290 && i4==370 && i==180)
+flag++;
+
+
+}
+setcolor(6);
+char key;
+rectangle(x1,y1,x2,y2);
+int flag1=0;
+do{
+key=getch();
+if(flag1!=3)
+  if(key==80)
+    {setcolor(0);
+     rectangle(x1,y1,x2,y2);
+     setcolor(4);
+     rectangle(x1,y1+=80,x2,y2+=80);
+     flag1++;}
+if(flag1!=0)
+  if(key==72)
+    {
+     setcolor(0);
+     rectangle(x1,y1,x2,y2);
+     setcolor(4);
+     rectangle(x1,y1-=80,x2,y2-=80);
+     flag1--;
+    }
+}while(key!=13);
+
+setcolor(c);
+rectangle(x1,y1,x2,y2);
+
+int j=0,opt1=0,opt2=0,opt3=0,opt4=0;
+do{
+delay(30);
+cleardevice();
+j++;
+if(x1==45 && y1==125)
+{settextstyle(1,0,j);
+outtextxy(170,132,a[1]);
+opt1=1;}
+if(x1==45 && y1==205)
+{settextstyle(1,0,j);
+outtextxy(110,132,a[2]);
+opt2=1;}
+if(x1==45 && y1==285)
+{settextstyle(1,0,j);
+outtextxy(100,132,a[3]);
+opt3=1;}
+if(x1==45 && y1==365)
+{settextstyle(1,0,j);
+outtextxy(190,132,a[4]);
+opt4=1;}
+}while(j<=20);
+
+
+if(opt1)
+{int i=j;
+for(;i>=0;i--)
+{delay(80);
+cleardevice();
+settextstyle(1,0,i);
+outtextxy(170,132,a[1]);
+if(i-1==0)
+i=-1;
+}
+i=0;
+cleardevice();
+for(int k=132;i<=j/4 || x2==505;i++,k+=8)
+{delay(100);
+cleardevice();
+settextstyle(1,0,i);
+outtextxy(120,k,a[0]);
+rectangle(165,300,505,330);}
+}
+if(opt1)
+{
+int x1=170,y1=305,x2=170,y2=325;
+for(;x2<=500;x2++)
+{delay(10);
+if(x2==450 || x2==200)
+{randomize();
+int ran=random(3);
+if(ran==0)
+delay(100);
+if(ran==1)
+delay(500);
+if(ran==2)
+delay(1000);}
+rectangle(x1,y1,x2,y2);}
+delay(100);
+}
+
+
+if(opt2)
+{for(int i=80,k=132;j>=0;j--)
+{delay(30);
+cleardevice();
+settextstyle(1,0,j);
+i+=8;
+k-=5;
+outtextxy(i,k,a[2]);
+}
+highscores();
+while(!getch())
+goto s;
+}
+
+if(opt3)
+{for(int i=80,k=132;j>=0;j--)
+{delay(30);
+cleardevice();
+settextstyle(1,0,j);
+i+=8;
+k-=5;
+outtextxy(i,k,a[3]);
+}
+extras(c);
+while(!getch())
+goto s;
+}
+
+if(opt4)
+{for(int i=190,k=132;j>=0;j--)
+{delay(30);
+cleardevice();
+settextstyle(1,0,j);
+i+=4;
+k-=5;
+outtextxy(i,k,a[4]);
+if(j==0)
+exit(0);}
+while(!getch())
+goto s;
+}
+}
+
+void highscores()
+{int i;
+//reset file
+/*
+ofstream f("don.dat",ios::binary);
+for(i=0;i<5;i++)
+{s.accept();
+f.write((char *)&s,sizeof(s));}
+f.close();
+//*/
+///*
+settextstyle(7,0,4);
+ifstream f1("don.dat",ios::binary);
+if(!f1)
+{cerr<<"cannot open";
+getch();
+exit(1);}
+
+f1.read((char *)&s,sizeof(s));
+space=105;
+i=0;
+while(f1 && i<5)
+{
+s.display();
+f1.read((char *)&s,sizeof(s));
+i++;
+}
+getch();
+f1.close();
+cleardevice();
+highscore++;
+//*/
+}
+
+void hsm()
+{int i;
+ifstream f2("don.dat",ios::binary);
+ofstream f3("temp.dat",ios::binary);
+if(!f2 && !f3)
+{cerr<<"cannot open";
+getch();
+exit(1);
+}
+int flag=0;
+
+f2.read((char *)&s,sizeof(s));
+i=0;
+while(f2 && i<5)
+{
+if(deal >= s.no && flag==0)
+{info t;
+t=s;
+do{
+settextstyle(7,0,2);
+setcolor(WHITE);
+cleardevice();
+rectangle(220,200,400,240);
+outtextxy(200,150,"ENTER YOUR NAME");
+window(30,14,70,20);
+gets(uname);
+}while(check(uname));
+
+strcpy(s.name,uname);
+s.no=deal;
+f3.write((char *)&s,sizeof(s));
+f3.write((char *)&t,sizeof(t));
+flag=1;
+}
+else
+ f3.write((char *)&s,sizeof(s));
+f2.read((char *)&s,sizeof(s));
+i++;
+}
+f2.close();
+f3.close();
+remove("don.dat");
+rename("temp.dat","don.dat");
+cleardevice();
+ifstream f4("don.dat",ios::binary);
+if(!f4)
+{cerr<<"cannot open";
+getch();
+exit(1);}
+
+f4.read((char *)&s,sizeof(s));
+space=105;
+i=0;
+while(f4 && i<5)
+{
+s.display();
+f4.read((char *)&s,sizeof(s));
+i++;
+}
+f4.close();
+delay(2000);
+getch();
+}
+
+
+int check(char uname[])
+{int n=strlen(uname);
+if(n>=10)
+{clrscr();
+outtextxy(200,150,"Do not exceed 10 letters");
+delay(2000);
+return 1;}
+else
+return 0;
+}
+
+
+void extras (int c)
+{setcolor(c);
+settextstyle(1,0,4);
+rectangle(200,150,430,200);
+outtextxy(210,155,"INSTRUCTIONS");
+rectangle(200,250,430,300);
+outtextxy(250,255,"CREDITS");
+int x1=200,y1=150,x2=430,y2=200;
+setcolor(RED);
+char key;
+rectangle(x1,y1,x2,y2);
+int flag1=0;
+do{
+key=getch();
+if(flag1!=1)
+  if(key==80)
+    {setcolor(WHITE);
+     rectangle(x1,y1,x2,y2);
+     setcolor(RED);
+     rectangle(x1,y1+=100,x2,y2+=100);
+     flag1++;}
+if(flag1!=0)
+  if(key==72)
+    {
+     setcolor(WHITE);
+     rectangle(x1,y1,x2,y2);
+     setcolor(RED);
+     rectangle(x1,y1-=100,x2,y2-=100);
+     flag1--;
+    }
+}while(key!=13);
+cleardevice();
+if(y1==150)
+{char a[9][200];
+cout<<"\n                                  INSTRUCTIONS";
+strcpy(a[0],"\n\n    1.This game based on PROBABILITY.\n\n");
+strcpy(a[1],"    2.The user has to choose ONE box out of the 14 available boxes.\n\n");
+strcpy(a[2],"    3.Each box contains diffrent amount ranging from Rs 1 to Rs 25,00,000.\n\n");
+strcpy(a[3],"    4.The game progresses by opening rest of the 13 boxes, at the end of\n      which the user will come to know about the amount in his box that\n      he chose in the begining of the game.\n\n");
+strcpy(a[4],"    5.Between few rounds in the game,the BANKER will offer a fair amount as\n      deal for the user.\n\n");
+strcpy(a[5],"    6.The Amount given as deal by the banker is based on probability of\n      huge amounts in the box chosen by the user.\n\n");
+strcpy(a[6],"    7.If the user finds a fair deal from the banker he could accept it\n      and quit the game by taking the deal amount given by the banker.\n\n");
+strcpy(a[7],"    8.If the user is not interested in the deal, he could continue playing\n      the game by giving NO DEAL.\n\n");
+strcpy(a[8],"    9.So,the user can end the game either by accepting the deal given by\n      the banker or by opening all the 13 boxes (excluding the box chosen\n      by the user in the begining of the game).");
+
+for(int i=0;i<=8 && !kbhit();i++)
+{for(int j=0;a[i][j] && !kbhit();j++)
+{cout<<a[i][j];
+delay(10);}
+delay(1000);}
+if(getch())
+clrscr();
+}
+else
+{setcolor(WHITE);
+char cr[19][200];
+strcpy(cr[0],"Agilan and Praneet are grateful to teachers");
+strcpy(cr[1],"Ms. Uma Arthi and Ms. Na. Udhaya Khumari");
+strcpy(cr[2],"from the department of Computer Science,");
+strcpy(cr[3],"D.A.V Senior Secondary School.");
+strcpy(cr[4],"We extend our heartly thanks to Consultant editor for");
+strcpy(cr[5],"going through the code and making valuble suggestions.");
+strcpy(cr[6],"For giving permission to reproduce our ideas in this project");
+strcpy(cr[7],"we would like to thank our Principal");
+strcpy(cr[8],"Mrs. Lalitha Thiagarajan");
+strcpy(cr[9],"for giving this valuble oppurtuinity.");
+strcpy(cr[10],"We acknowledge the service of the lab (Computer Science)");
+strcpy(cr[11],"attender Girija Raghupathy.");
+strcpy(cr[12],"We express our gratitudes to all others including our friends");
+strcpy(cr[13],"who were a part of this project.");
+strcpy(cr[14],"Game Developed and Edited by : A.Agilan and Praneet Baskar");
+strcpy(cr[15],"Valuble suggestions given by : Ms. Uma Arthi");
+strcpy(cr[16],"Compiler used : Turbo C++");
+strcpy(cr[17],"Source of game ideas : Sun TV (Deal or No Deal)");
+strcpy(cr[18],"Additional help from : Venkatesh and Thiageshwaran");
+settextstyle(1,0,2);
+for(int y=400;!kbhit();y-=20)
+{delay(1000);
+cleardevice();
+outtextxy(100,y,cr[0]);
+if(y<390)
+{int a=y+30;
+a--;
+outtextxy(95,a,cr[1]);
+}
+if(y<380)
+{int a=y+60;
+a--;
+outtextxy(95,a,cr[2]);
+}
+if(y<370)
+{int a=y+90;
+a--;
+outtextxy(155,a,cr[3]);}
+if(y<340)
+{int a=y+150;
+a--;
+outtextxy(40,a,cr[4]);}
+if(y<330)
+{int a=y+180;
+a--;
+outtextxy(30,a,cr[5]);}
+if(y<300)
+{int a=y+240;
+a--;
+outtextxy(10,a,cr[6]);}
+if(y<390)
+{int a=y+270;
+a--;
+outtextxy(120,a,cr[7]);}
+if(y<380)
+{int a=y+300;
+a--;
+outtextxy(200,a,cr[8]);}
+if(y<370)
+{int a=y+330;
+a--;
+outtextxy(140,a,cr[9]);}
+if(y<310)
+{int a=y+390;
+a--;
+outtextxy(20,a,cr[10]);}
+if(y<300)
+{int a=y+420;
+a--;
+outtextxy(170,a,cr[11]);}
+if(y<230)
+{int a=y+480;
+a--;
+outtextxy(10,a,cr[12]);}
+if(y<220)
+{int a=y+510;
+a--;
+outtextxy(150,a,cr[13]);}
+if(y<160)
+{int a=y+570;
+a--;
+outtextxy(10,a,cr[14]);}
+if(y<120)
+{int a=y+600;
+a--;
+outtextxy(10,a,cr[15]);}
+if(y<80)
+{int a=y+630;
+a--;
+outtextxy(10,a,cr[16]);}
+if(y<40)
+{int a=y+690;
+a--;
+outtextxy(10,a,cr[17]);}
+if(y<0)
+{int a=y+720;
+a--;
+outtextxy(10,a,cr[18]);}
+}}
+cleardevice();
+ext++;
+}
+
